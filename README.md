@@ -1,6 +1,6 @@
-# 🤖 AI-Powered HR Recruitment Agent
+# AI-Powered HR Recruitment Agent
 
-## 📌 Project Overview
+## Project Overview
 
 This project implements an AI-powered HR Recruitment Agent designed to assist HR teams in automating the recruitment workflow. It enables HR professionals to:
 
@@ -41,10 +41,10 @@ The system demonstrates end-to-end AI system design, including AI orchestration,
 
 ### Data Flow:
 
-1. HR uploads/generates JD → JD is embedded and stored
-2. Candidate data fetched and embedded → Stored in vector DB
-3. Vector DB queried for best candidates → Matching scores generated
-4. AI generates personalized emails → Results displayed in UI
+1. HR uploads/generates JD :➡️ JD is embedded and stored
+2. Candidate data fetched and embedded :➡️ Stored in vector DB
+3. Vector DB queried for best candidates :➡️ Matching scores generated
+4. AI generates personalized emails :➡️ Results displayed in UI
 
 ## 📁 Project Structure
 
@@ -58,21 +58,21 @@ omni-assignment/
 │   ├── requirements.txt        # Python dependencies
 │   ├── ai_flow/                # AI workflow components
 │   │   ├── graph.py            # LangGraph workflow for recruitment
-│   │   └── __pycache__/
+│   │
 │   ├── core/                   # Core business logic
 │   │   ├── chroma_client.py    # ChromaDB vector database client
 │   │   ├── embeddings.py       # Text embedding utilities
 │   │   ├── langgraph_workflow.py # JD generation workflow
 │   │   ├── llm.py              # LLM configuration and routing
 │   │   ├── logging.py          # Logging middleware
-│   │   └── __pycache__/
+│   │
 │   ├── db/                     # Database layer
 │   │   ├── db.py               # SQLAlchemy database setup
-│   │   └── __pycache__/
+│   │
 │   ├── models/                 # Data models
 │   │   ├── job_descriptions.py # JD model
 │   │   ├── user.py             # User model
-│   │   └── __pycache__/
+│   │
 │   ├── routes/                 # API endpoints
 │   │   ├── candidates.py       # Candidate management
 │   │   ├── choose_model.py     # Model selection
@@ -80,7 +80,7 @@ omni-assignment/
 │   │   ├── job_descriptions.py # JD operations
 │   │   ├── match_score.py      # Matching logic
 │   │   ├── user.py             # Authentication
-│   │   └── __pycache__/
+│   │
 │   ├── schema/                 # Pydantic schemas
 │   │   ├── candidates.py       # Candidate schemas
 │   │   ├── choose_model.py     # Model schemas
@@ -88,24 +88,24 @@ omni-assignment/
 │   │   ├── job_descriptions.py # JD schemas
 │   │   ├── match_score.py      # Match schemas
 │   │   ├── user.py             # User schemas
-│   │   └── __pycache__/
+│   │
 │   ├── services/               # Business services
 │   │   ├── candidates.py       # Candidate services
 │   │   ├── email.py            # Email services
 │   │   ├── job_descriptions.py # JD services
 │   │   ├── match_score.py      # Matching services
-│   │   └── __pycache__/
+│   │
 │   └── utilities/              # Utility functions
 │       ├── auth.py             # Authentication utilities
 │       ├── crypt.py            # Encryption utilities
 │       ├── jd_parser.py        # JD parsing utilities
 │       ├── mock_sources.py     # Mock data sources
-│       └── __pycache__/
+│
 ├── frontend/                   # Streamlit frontend
 │   ├── Dockerfile              # Frontend container config
 │   ├── app.py                  # Streamlit application
 │   ├── requirements.txt        # Python dependencies
-│   └── __pycache__/
+│
 └── chroma_db/                 # ChromaDB persistent storage
     ├── chroma.sqlite3
     └── [collection_dirs]/
@@ -117,8 +117,9 @@ omni-assignment/
 
 LangGraph is chosen for AI orchestration because it provides:
 
-- **State-based Workflows**: Maintains context across multi-step processes
-- **Complex Reasoning Pipelines**: Better suited than plain LangChain for sequential workflows like JD → Candidate → Match → Email
+- **State-based Workflows**: Maintains shared state across all steps (job details, candidate data, scores, decisions), simplifying data flow
+- **Complex Reasoning Pipelines**: Ideal for structured flows such as: Job Description → Candidate Profile → Matching Logic → Decision → Email Generation
+  This is more reliable than running independent LangChain calls.
 - **Built-in Features**:
   - Model switching capabilities
   - Tool calling integration
@@ -129,10 +130,10 @@ LangGraph is chosen for AI orchestration because it provides:
 
 LangChain components are used for:
 
-- **LLM Abstraction**: Unified interface for different LLM providers
-- **Prompt Engineering**: Structured prompt templates and chains
+- **LLM Abstraction**: making the system flexible and future-proof and working with different LLM providers (OpenAI, Anthropic, local models)
+- **Prompt Engineering**: Structured prompt templates and chains and AI response handling
 - **Tool Integration**: Connecting LLMs with external tools and APIs
-- **Memory Management**: Conversation history and context retention
+- **Memory Management**: Conversation history and context retention with individual steps
 
 ### Workflow Benefits:
 
@@ -149,7 +150,7 @@ ChromaDB was selected as the vector database because:
 
 - **Lightweight & Local-First**: No cloud dependency, runs locally
 - **Metadata Filtering**: Supports complex queries with metadata
-- **Easy Integration**: Python-native with simple API
+- **Easy Integration**: Python-native with simple API and for testing and development
 - **Performance**: Fast similarity search with HNSW indexing
 
 ### Project-Specific Benefits:
@@ -161,9 +162,9 @@ ChromaDB was selected as the vector database because:
 
 ### Alternatives Considered:
 
-- **Pinecone**: Cloud-only, requires API keys and internet
-- **Weaviate**: More complex setup and configuration
-- **FAISS**: Lacks metadata filtering and persistence
+- **Pinecone**: Cloud-only, requires API keys and internet and free some limitations
+- **Weaviate**: More complex setup and configuration and Pay-as-you-go pricing model
+- **FAISS**: Lacks metadata filtering and persistence and
 - **ChromaDB**: Best fit for local, lightweight vector operations
 
 ## 🤖 Model Selection Strategy
@@ -212,7 +213,7 @@ The system implements a hybrid model approach supporting two modes:
 - **Fallback**: Local models for resilience and privacy
 - **Hybrid**: Runtime switching based on requirements
 
-## 🔌 API Endpoints
+## 🔌 API Endpoints as per the documents
 
 | Method | Endpoint             | Description                   |
 | ------ | -------------------- | ----------------------------- |
@@ -268,7 +269,8 @@ streamlit run app.py --server.port=8501 --server.address=0.0.0.0
 Create `.env` file in backend directory:
 
 ```env
-OPENAI_API_KEY=your_openai_key
+openai_api_key=your_openai_key
+gemini_api_key=your_gemini_key
 SMTP_SERVER=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USERNAME=your_email@gmail.com
@@ -342,30 +344,23 @@ docker-compose up --build --force-recreate
 - **No Authentication UI**: API-only authentication (no login forms)
 - **Mock Integrations**: No real job portal API connections
 - **No Persistent Relational DB**: Only vector database, no user/session persistence
-- **Basic UI**: Streamlit interface is functional but not production-grade
+- **Basic UI**: Not production-grade UI/UX
 - **Single JD Processing**: Processes one JD at a time
 - **Email Dependencies**: Requires SMTP configuration for email features
 - **Resource Intensive**: Local LLM requires significant hardware resources
 
 ## 🚀 Future Improvements
 
-### High Priority:
-
 - **Real API Integrations**: LinkedIn, Naukri, Indeed API connections
-- **User Authentication UI**: Login/register forms in Streamlit
+- **User Authentication UI**: Login/register forms
 - **Resume Upload & Parsing**: PDF/DOCX resume processing
 - **Multi-JD Support**: Batch processing multiple job descriptions
 - **Database Migration**: PostgreSQL/MySQL for relational data
 
-### Medium Priority:
-
-- **Role-Based Access**: HR Admin, Recruiter, Manager roles
 - **Feedback Loop**: User feedback for improving match scores
-- **Streaming Responses**: Real-time LLM response streaming
+- **Streaming Responses**: Real-time LLM response streaming properly
 - **Background Jobs**: Celery/Redis for async processing
 - **Advanced Matching**: Skills gap analysis, culture fit scoring
-
-### Low Priority:
 
 - **Observability**: Comprehensive logging, metrics, tracing
 - **Dashboard UI**: Analytics dashboard with charts and KPIs
@@ -378,10 +373,10 @@ docker-compose up --build --force-recreate
 
 ### Backend:
 
-- **Framework**: FastAPI (async, high performance)
+- **Framework**: FastAPI
 - **AI Orchestration**: LangGraph + LangChain
 - **Vector Database**: ChromaDB
-- **LLM Providers**: OpenAI, Ollama (local)
+- **LLM Providers**: OpenAI, Gemini, Ollama (local)
 - **Database**: SQLAlchemy + SQLite
 - **Authentication**: JWT tokens
 - **Email**: SMTP integration
@@ -401,8 +396,6 @@ docker-compose up --build --force-recreate
 
 ### Development Tools:
 
-- **Linting**: Black, Flake8
-- **Testing**: Pytest
 - **Documentation**: Swagger/ReDoc auto-generated
 - **Version Control**: Git
 
