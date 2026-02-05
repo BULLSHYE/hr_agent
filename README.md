@@ -10,7 +10,7 @@ This project implements an AI-powered HR Recruitment Agent designed to assist HR
 - **Match Candidates with JDs**: AI-powered similarity scoring and reasoning
 - **Generate Personalized Emails**: AI-written emails for candidates and HR notifications
 - **Dynamic Model Switching**: Switch between API-based and local LLMs at runtime
-- **Docker-Ready**: Fully containerized for easy deployment
+- **Docker-Ready**: Fully containerized for easy deployment but not verified due to lack of storage access
 
 The system demonstrates end-to-end AI system design, including AI orchestration, vector memory (RAG), model routing, matching logic, and real-world API simulation.
 
