@@ -107,4 +107,4 @@ def get_current_model():
     models = providers.get(current_provider, {}).get("models", [])
     model_info = next((m for m in models if m["name"] == current_model), None)
     display = model_info["display"] if model_info else current_model
-    return {"name": current_model, "display": display, "provider": current_provider}
+    return {"model": current_model, "display": display, "provider": current_provider}

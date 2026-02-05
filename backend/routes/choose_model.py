@@ -10,11 +10,31 @@ router = APIRouter()
 @router.post("/set-model")
 async def set_llm_model(request: SetModelRequest):
     try:
+        # Validate provider and model exist
+        available = get_available_models()
+        if request.provider not in available:
+            raise ValueError(f"Provider '{request.provider}' not found")
+        
+        model_names = [m["name"] for m in available[request.provider]]
+        if request.model not in model_names:
+            raise ValueError(f"Model '{request.model}' not found in provider '{request.provider}'")
+        
+        # Set the model
         set_model(request.provider, request.model, request.api_key)
-        llm = get_llm()
-        return {"message": f"Model set to {request.model} from {request.provider}", "model": str(llm)}
+        
+        # Get current model info
+        current = get_current_model()
+        return {
+            "success": True,
+            "message": f"Model changed to {current['display']} ({request.provider})",
+            "provider": request.provider,
+            "model": request.model,
+            "display": current["display"]
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Error setting model: {str(e)}")
 
 # To check current LLM model
 @router.get("/current-model")
